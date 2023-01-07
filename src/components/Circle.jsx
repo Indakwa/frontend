@@ -1,13 +1,44 @@
-import Pic1 from '../images/1.jpg'
-import Pic2 from '../images/2.jpg'
-import Pic3 from '../images/3.jpg'
-import Pic4 from '../images/4.jpg'
-import Pic5 from '../images/5.jpg'
-import Ben from '../images/pp.jpg'
 import { RxAvatar } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import Loading from './Loading';
 
 const Circle = () => {
+    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(true)
+
+    const theToken = localStorage.getItem('token')
+    const theId = localStorage.getItem('_id')
+
+
+
+    const [users, setUsers] = useState();
+
+    useEffect(() => {
+    const fetchUsers = async () => {
+        try {
+        const response = await axios.get(`http://localhost:5000/api/users/all`);
+        setUsers(response.data);
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 1000);
+        
+        } catch (error) {
+        console.error(error);
+        }
+    };
+    fetchUsers();
+    if(!theId || !theToken){
+        navigate('/login')
+    }
+    //eslint-disable-next-line
+    }, []);
+
+    if (isLoading) {
+        return <Loading />
+    }
+
   return (
     <section className='circlePage'>
         <div className="titleDiv">
@@ -21,34 +52,13 @@ const Circle = () => {
         
 
         <div className="container">
-            <div className="card">
-                <img src={Pic1} alt="a friend of a friend" />
-                <p className='nickname'>Freddy</p>
-            </div>
-            <div className="card">
-                <img src={Pic2} alt="a friend of a friend" />
-                <p className='nickname'>Siphy</p>
-            </div>
-            <div className="card">
-                <img src={Pic3} alt="a friend of a friend" />
-                <p className='nickname'>Kahenya</p>
-            </div>
-            <div className="card">
-                <img src={Pic4} alt="a friend of a friend" />
-                <p className='nickname'>Hadija</p>
-            </div>
-            <div className="card">
-                <img src={Pic5} alt="a friend of a friend" />
-                <p className='nickname'>Merona</p>
-            </div>
-            <div className="card">
-                <img src={Ben} alt="a friend of a friend" />
-                <p className='nickname'>Anungo</p>
-            </div>
-            <div className="card">
-                <img src={Pic5} alt="a friend of a friend" />
-                <p className='nickname'>Merona</p>
-            </div>
+
+            {users?.map((user, index) => (
+                <div className="card" key={index}>
+                    <img src={user.image} alt="a friend of a friend" />
+                    <p className='nickname'>{user.nickname}</p>
+                </div>
+            ))}
         </div>
 
         <p id='copy'>&copy; 2023 </p>

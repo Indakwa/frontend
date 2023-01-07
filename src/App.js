@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import Circle from "./components/Circle";
 import Edit from "./components/Edit";
 import Profile from "./components/Profile";
@@ -18,6 +20,7 @@ function App() {
           <Route path='/edit' element={<Edit />} />
         </Routes>
       </Router>
+      <ToastContainer />
     </>
   );
 }
