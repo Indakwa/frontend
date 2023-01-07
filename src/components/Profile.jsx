@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import Loading from './Loading';
+const API_URL = '/api/users/'
 
 
 const Profile = () => {
@@ -29,7 +30,7 @@ const Profile = () => {
                     }
                 }
 
-                const response = await axios.get(`http://localhost:5000/api/users/me`, config);
+                const response = await axios.get(API_URL + 'me', config);
                 setUser(response.data.nickname);
                 setPreview(response.data.image);
 
@@ -61,7 +62,7 @@ const Profile = () => {
                 Authorization: `Bearer ${token}`,
                 }
             }
-            const response = await axios.delete(`http://localhost:5000/api/users/${id}`, config);
+            const response = await axios.delete(API_URL + id, config);
             if (response.status === 204) {
                 localStorage.removeItem("token")
                 localStorage.removeItem("_id")

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify'
 import Loading from './Loading';
+const API_URL = '/api/users/'
 
 
 const SignUp = () => {
@@ -63,7 +64,7 @@ const SignUp = () => {
 
 
             try {
-                const response = await axios.post('http://localhost:5000/api/users', formData);
+                const response = await axios.post(API_URL, formData);
                 
                 if (response.status === 201) {
                   setData({ 

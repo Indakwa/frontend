@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Loading from './Loading';
+const API_URL = '/api/users/'
 
 const Edit = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -28,7 +29,7 @@ const Edit = () => {
                 }
             }
 
-            axios.get(`http://localhost:5000/api/users/me`, config)
+            axios.get(API_URL + 'me', config)
             .then(function(response){
               setData(response.data);
               setPreview(response.data.image);
@@ -70,7 +71,7 @@ const Edit = () => {
             }
         }
   
-        axios.put(`http://localhost:5000/api/users/${id}`, formData, config)
+        axios.put(API_URL + id, formData, config)
           .then(function (response) {
             if(response.status === 200){
               setData({ nickname: "", image: "" });

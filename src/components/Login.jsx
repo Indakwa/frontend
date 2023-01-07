@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import Loading from './Loading';
+const API_URL = '/api/users/'
 
 
 
@@ -32,7 +33,7 @@ const Login = () => {
 
     
         try {
-            const response = await axios.post(`http://localhost:5000/api/users/login`, formData)
+            const response = await axios.post(API_URL + 'login', formData)
             if (response.status === 201) {
                 localStorage.setItem('user', JSON.stringify(response.data))
                 localStorage.setItem('token', response.data.token)
